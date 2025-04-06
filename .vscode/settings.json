@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "TankArena_329C.sln"
+    "dotnet.defaultSolution": "TankArena.sln"
 }

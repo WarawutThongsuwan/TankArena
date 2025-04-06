@@ -23,7 +23,7 @@ public class UserData
     public string userName;
     public string userAuthId;
     public int userColorIndex;
-    public GameInfo userGamePreferences;
+    public GameInfo userGamePreferences = new GameInfo();
 }
 
 [Serializable]

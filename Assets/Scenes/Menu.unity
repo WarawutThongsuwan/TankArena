@@ -1419,6 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940bbcf62d7dac04e9758868417354ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 1438649377}
   lobbyItemParent: {fileID: 1285619095}
   lobbyItemPrefab: {fileID: 7467759627128463375, guid: 7f8acb7839562a44d8d8f561577f4ad0, type: 3}
 --- !u!1 &1066480276
@@ -3591,7 +3592,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1438649377}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: StartHost
+        m_MethodName: FindMatchPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

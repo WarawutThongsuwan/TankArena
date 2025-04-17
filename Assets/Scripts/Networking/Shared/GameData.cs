@@ -22,6 +22,7 @@ public class UserData
 {
     public string userName;
     public string userAuthId;
+    public int teamIndex = -1;
     public int userColorIndex;
     public GameInfo userGamePreferences = new GameInfo();
 }

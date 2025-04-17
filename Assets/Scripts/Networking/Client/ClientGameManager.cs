@@ -16,7 +16,7 @@ public class ClientGameManager : IDisposable
     private JoinAllocation allocation;
     private NetworkClient networkClient;
     private MatchplayMatchmaker matchmaker;
-    private UserData userData;
+    public UserData UserData { get; private set; }
 
     private const string MenuSceneName = "Menu";
     public async Task<bool> InitAsync()
@@ -30,7 +30,7 @@ public class ClientGameManager : IDisposable
 
         if(authState == AuthState.Authenticated)
         {
-            userData = new UserData
+            UserData = new UserData
             {
                 userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
                 userAuthId = AuthenticationService.Instance.PlayerId,
@@ -42,20 +42,21 @@ public class ClientGameManager : IDisposable
         return false;
     }
 
-    public async void MatchmakeAsync(Action<MatchmakerPollingResult> onMatchmakeResponse)
+    public async void MatchmakeAsync(bool isTeamQueue,Action<MatchmakerPollingResult> onMatchmakeResponse)
     {
         if (matchmaker.IsMatchmaking)
         {
             return;
         }
 
+        UserData.userGamePreferences.gameQueue = isTeamQueue ? GameQueue.Team : GameQueue.Solo;
         MatchmakerPollingResult matchResult = await GetMatchAsync();
         onMatchmakeResponse?.Invoke(matchResult);
     }
 
     private async Task<MatchmakerPollingResult> GetMatchAsync()
     {
-        MatchmakingResult matchmakingResult = await matchmaker.Matchmake(userData);
+        MatchmakingResult matchmakingResult = await matchmaker.Matchmake(UserData);
 
         if (matchmakingResult.result == MatchmakerPollingResult.Success)
         {
@@ -113,7 +114,7 @@ public class ClientGameManager : IDisposable
 
     private void ConnectClient()
     {
-        string payload = JsonUtility.ToJson(userData);
+        string payload = JsonUtility.ToJson(UserData);
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
